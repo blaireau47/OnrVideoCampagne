@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ONRCampagneVideoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Campagnes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="CentraleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Centrales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SoireeId" Type="int" Nullable="false" />
+          <Property Name="teamNumber" Type="int" Nullable="false" />
+          <Property Name="organizationName" Type="nvarchar" MaxLength="50" />
+          <Property Name="mileage" Type="int" />
+          <Property Name="totalDonations" Type="int" />
+          <Property Name="completedTransportsCount" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Soirees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="campagneId" Type="int" Nullable="false" />
+          <Property Name="central" Type="int" Nullable="false" />
+          <Property Name="soiree" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transports">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="teamId" Type="int" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="originPostalCode" Type="nchar" MaxLength="10" />
+          <Property Name="destinationPostalCode" Type="nchar" MaxLength="10" />
+          <Property Name="creationTime" Type="datetime" />
+          <Property Name="allocationTime" Type="datetime" />
+          <Property Name="assignmentTime" Type="datetime" />
+          <Property Name="teamMileage" Type="int" />
+          <Property Name="teamNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Volunteers">
+          <Key>
+            <PropertyRef Name="teamID" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="personCode" />
+          </Key>
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="teamID" Type="int" Nullable="false" />
+          <Property Name="organizationName" Type="nvarchar" MaxLength="50" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="teamNumber" Type="int" Nullable="false" />
+          <Property Name="personCode" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Campagnes_ToCentrale">
+          <End Role="Centrales" Type="Self.Centrales" Multiplicity="1" />
+          <End Role="Campagnes" Type="Self.Campagnes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Centrales">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Campagnes">
+              <PropertyRef Name="CentraleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipes_ToSoirees">
+          <End Role="Soirees" Type="Self.Soirees" Multiplicity="1" />
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Soirees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipes">
+              <PropertyRef Name="SoireeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Soirees_ToCampagne">
+          <End Role="Campagnes" Type="Self.Campagnes" Multiplicity="1" />
+          <End Role="Soirees" Type="Self.Soirees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campagnes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Soirees">
+              <PropertyRef Name="campagneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transports_ToEquipes">
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1" />
+          <End Role="Transports" Type="Self.Transports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Volunteers_ToEquipes">
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1" />
+          <End Role="Volunteers" Type="Self.Volunteers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Volunteers">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ONRCampagneVideoModelStoreContainer">
+          <EntitySet Name="Campagnes" EntityType="Self.Campagnes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Centrales" EntityType="Self.Centrales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipes" EntityType="Self.Equipes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Soirees" EntityType="Self.Soirees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transports" EntityType="Self.Transports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Volunteers" EntityType="Self.Volunteers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Campagnes_ToCentrale" Association="Self.FK_Campagnes_ToCentrale">
+            <End Role="Centrales" EntitySet="Centrales" />
+            <End Role="Campagnes" EntitySet="Campagnes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipes_ToSoirees" Association="Self.FK_Equipes_ToSoirees">
+            <End Role="Soirees" EntitySet="Soirees" />
+            <End Role="Equipes" EntitySet="Equipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Soirees_ToCampagne" Association="Self.FK_Soirees_ToCampagne">
+            <End Role="Campagnes" EntitySet="Campagnes" />
+            <End Role="Soirees" EntitySet="Soirees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transports_ToEquipes" Association="Self.FK_Transports_ToEquipes">
+            <End Role="Equipes" EntitySet="Equipes" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Volunteers_ToEquipes" Association="Self.FK_Volunteers_ToEquipes">
+            <End Role="Equipes" EntitySet="Equipes" />
+            <End Role="Volunteers" EntitySet="Volunteers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ONRCampagneVideoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Campagne">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="CentraleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Centrale" Relationship="Self.FK_Campagnes_ToCentrale" FromRole="Campagnes" ToRole="Centrales" />
+          <NavigationProperty Name="Soirees" Relationship="Self.FK_Soirees_ToCampagne" FromRole="Campagnes" ToRole="Soirees" />
+        </EntityType>
+        <EntityType Name="Centrale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Campagnes" Relationship="Self.FK_Campagnes_ToCentrale" FromRole="Centrales" ToRole="Campagnes" />
+        </EntityType>
+        <EntityType Name="Equipe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SoireeId" Type="Int32" Nullable="false" />
+          <Property Name="teamNumber" Type="Int32" Nullable="false" />
+          <Property Name="organizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mileage" Type="Int32" />
+          <Property Name="totalDonations" Type="Int32" />
+          <Property Name="completedTransportsCount" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Soiree" Relationship="Self.FK_Equipes_ToSoirees" FromRole="Equipes" ToRole="Soirees" />
+          <NavigationProperty Name="Transports" Relationship="Self.FK_Transports_ToEquipes" FromRole="Equipes" ToRole="Transports" />
+          <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteers_ToEquipes" FromRole="Equipes" ToRole="Volunteers" />
+        </EntityType>
+        <EntityType Name="Soiree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="campagneId" Type="Int32" Nullable="false" />
+          <Property Name="central" Type="Int32" Nullable="false" />
+          <Property Name="soiree1" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Campagne" Relationship="Self.FK_Soirees_ToCampagne" FromRole="Soirees" ToRole="Campagnes" />
+          <NavigationProperty Name="Equipes" Relationship="Self.FK_Equipes_ToSoirees" FromRole="Soirees" ToRole="Equipes" />
+        </EntityType>
+        <EntityType Name="Transport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="teamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="originPostalCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="destinationPostalCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="creationTime" Type="DateTime" Precision="3" />
+          <Property Name="allocationTime" Type="DateTime" Precision="3" />
+          <Property Name="assignmentTime" Type="DateTime" Precision="3" />
+          <Property Name="teamMileage" Type="Int32" />
+          <NavigationProperty Name="Equipe" Relationship="Self.FK_Transports_ToEquipes" FromRole="Transports" ToRole="Equipes" />
+          <Property Name="teamNumber" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Volunteer">
+          <Key>
+            <PropertyRef Name="personCode" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="teamID" />
+          </Key>
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="teamID" Type="Int32" Nullable="false" />
+          <Property Name="organizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Equipe" Relationship="Self.FK_Volunteers_ToEquipes" FromRole="Volunteers" ToRole="Equipes" />
+          <Property Name="teamNumber" Type="Int32" Nullable="false" />
+          <Property Name="personCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Campagnes_ToCentrale">
+          <End Role="Centrales" Type="Self.Centrale" Multiplicity="1" />
+          <End Role="Campagnes" Type="Self.Campagne" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Centrales">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Campagnes">
+              <PropertyRef Name="CentraleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Soirees_ToCampagne">
+          <End Role="Campagnes" Type="Self.Campagne" Multiplicity="1" />
+          <End Role="Soirees" Type="Self.Soiree" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campagnes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Soirees">
+              <PropertyRef Name="campagneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipes_ToSoirees">
+          <End Role="Soirees" Type="Self.Soiree" Multiplicity="1" />
+          <End Role="Equipes" Type="Self.Equipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Soirees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Equipes">
+              <PropertyRef Name="SoireeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transports_ToEquipes">
+          <End Role="Equipes" Type="Self.Equipe" Multiplicity="1" />
+          <End Role="Transports" Type="Self.Transport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transports">
+              <PropertyRef Name="teamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Volunteers_ToEquipes">
+          <End Role="Equipes" Type="Self.Equipe" Multiplicity="1" />
+          <End Role="Volunteers" Type="Self.Volunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Volunteers">
+              <PropertyRef Name="teamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ONRCampagneVideoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Campagnes" EntityType="Self.Campagne" />
+          <EntitySet Name="Centrales" EntityType="Self.Centrale" />
+          <EntitySet Name="Equipes" EntityType="Self.Equipe" />
+          <EntitySet Name="Soirees" EntityType="Self.Soiree" />
+          <EntitySet Name="Transports" EntityType="Self.Transport" />
+          <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
+          <AssociationSet Name="FK_Campagnes_ToCentrale" Association="Self.FK_Campagnes_ToCentrale">
+            <End Role="Centrales" EntitySet="Centrales" />
+            <End Role="Campagnes" EntitySet="Campagnes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Soirees_ToCampagne" Association="Self.FK_Soirees_ToCampagne">
+            <End Role="Campagnes" EntitySet="Campagnes" />
+            <End Role="Soirees" EntitySet="Soirees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipes_ToSoirees" Association="Self.FK_Equipes_ToSoirees">
+            <End Role="Soirees" EntitySet="Soirees" />
+            <End Role="Equipes" EntitySet="Equipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transports_ToEquipes" Association="Self.FK_Transports_ToEquipes">
+            <End Role="Equipes" EntitySet="Equipes" />
+            <End Role="Transports" EntitySet="Transports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Volunteers_ToEquipes" Association="Self.FK_Volunteers_ToEquipes">
+            <End Role="Equipes" EntitySet="Equipes" />
+            <End Role="Volunteers" EntitySet="Volunteers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ONRCampagneVideoModelStoreContainer" CdmEntityContainer="ONRCampagneVideoEntities">
+          <EntitySetMapping Name="Campagnes">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.Campagne">
+              <MappingFragment StoreEntitySet="Campagnes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="CentraleID" ColumnName="CentraleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Centrales">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.Centrale">
+              <MappingFragment StoreEntitySet="Centrales">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipes">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.Equipe">
+              <MappingFragment StoreEntitySet="Equipes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SoireeId" ColumnName="SoireeId" />
+                <ScalarProperty Name="teamNumber" ColumnName="teamNumber" />
+                <ScalarProperty Name="organizationName" ColumnName="organizationName" />
+                <ScalarProperty Name="mileage" ColumnName="mileage" />
+                <ScalarProperty Name="totalDonations" ColumnName="totalDonations" />
+                <ScalarProperty Name="completedTransportsCount" ColumnName="completedTransportsCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Soirees">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.Soiree">
+              <MappingFragment StoreEntitySet="Soirees">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="campagneId" ColumnName="campagneId" />
+                <ScalarProperty Name="central" ColumnName="central" />
+                <ScalarProperty Name="soiree1" ColumnName="soiree" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transports">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.Transport">
+              <MappingFragment StoreEntitySet="Transports">
+                <ScalarProperty Name="teamNumber" ColumnName="teamNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="teamId" ColumnName="teamId" />
+                <ScalarProperty Name="originPostalCode" ColumnName="originPostalCode" />
+                <ScalarProperty Name="destinationPostalCode" ColumnName="destinationPostalCode" />
+                <ScalarProperty Name="creationTime" ColumnName="creationTime" />
+                <ScalarProperty Name="allocationTime" ColumnName="allocationTime" />
+                <ScalarProperty Name="assignmentTime" ColumnName="assignmentTime" />
+                <ScalarProperty Name="teamMileage" ColumnName="teamMileage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Volunteers">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.Volunteer">
+              <MappingFragment StoreEntitySet="Volunteers">
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="teamNumber" ColumnName="teamNumber" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="teamID" ColumnName="teamID" />
+                <ScalarProperty Name="organizationName" ColumnName="organizationName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

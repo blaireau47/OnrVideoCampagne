@@ -1,0 +1,195 @@
+{
+  "teams": [
+    {
+      "teamId": 30874,
+      "teamNumber": 1,
+      "organizationName": null,
+      "mileage": 0,
+      "totalDonations": 20.00,
+      "completedTransportsCount": 1
+    },
+    {
+      "teamId": 30878,
+      "teamNumber": 3,
+      "organizationName": null,
+      "mileage": 0,
+      "totalDonations": 20.00,
+      "completedTransportsCount": 1
+    },
+    {
+      "teamId": 30845,
+      "teamNumber": 2,
+      "organizationName": null,
+      "mileage": 0,
+      "totalDonations": 152.00,
+      "completedTransportsCount": 1
+    },
+    {
+      "teamId": 30878,
+      "teamNumber": 6,
+      "organizationName": null,
+      "mileage": 0,
+      "totalDonations": 356.00,
+      "completedTransportsCount": 1
+    },
+    {
+      "teamId": 30878,
+      "teamNumber": 7,
+      "organizationName": null,
+      "mileage": 0,
+      "totalDonations": 356.00,
+      "completedTransportsCount": 1
+    }
+  ],
+  "volunteers": [
+    {
+      "personCode": "FMY589",
+      "firstName": "France",
+      "lastName": "Marcotte",
+      "role": "ESCORT",
+      "email": "",
+      "teamNumber": "1",
+      "organizationName": "Rouge & Or"
+    },
+    {
+      "personCode": "LFS972",
+      "firstName": "François",
+      "lastName": "Leblond",
+      "role": "DRIVER",
+      "email": "",
+      "teamNumber": "1",
+      "organizationName": "Rouge & Or"
+    },
+    {
+      "personCode": "BPB980",
+      "firstName": "Bob",
+      "lastName": "Plante",
+      "role": "PARTNER",
+      "email": "",
+      "teamNumber": "1",
+      "organizationName": "ProColor"
+    },
+    {
+      "personCode": "DJE516",
+      "firstName": "Justine",
+      "lastName": "Malfoy",
+      "role": "ESCORT",
+      "email": "",
+      "teamNumber": "2",
+      "organizationName": "Rouge & Or"
+    },
+    {
+      "personCode": "LJJ886",
+      "firstName": "Julie",
+      "lastName": "Lamontagne",
+      "role": "DRIVER",
+      "email": "",
+      "teamNumber": "2",
+      "organizationName": "ProColor"
+    },
+    {
+      "personCode": "AMR423",
+      "firstName": "Alain",
+      "lastName": "Martin",
+      "role": "PARTNER",
+      "email": "",
+      "teamNumber": "2",
+      "organizationName": "ProColor"
+    },
+    {
+      "personCode": "BSD531",
+      "firstName": "Stéphane",
+      "lastName": "Boily",
+      "role": "ESCORT",
+      "email": "",
+      "teamNumber": "3",
+      "organizationName": "ProColor"
+    },
+    {
+      "personCode": "CLO269",
+      "firstName": "Jules",
+      "lastName": "Carbonneau",
+      "role": "DRIVER",
+      "email": "",
+      "teamNumber": "3",
+      "organizationName": "ProColor"
+    },
+    {
+      "personCode": "MMX154",
+      "firstName": "Mélanie",
+      "lastName": "Martel",
+      "role": "PARTNER",
+      "email": "",
+      "teamNumber": "3",
+      "organizationName": "Desjardins"
+    },
+    {
+      "personCode": "SJR974",
+      "firstName": "Justin",
+      "lastName": "Savard",
+      "role": "ESCORT",
+      "email": "",
+      "teamNumber": "6",
+      "organizationName": "Desharnais"
+    },
+    {
+      "personCode": "CPG282",
+      "firstName": "Paul",
+      "lastName": "Cantin",
+      "role": "DRIVER",
+      "email": "",
+      "teamNumber": "6",
+      "organizationName": "Desharnais"
+    },
+    {
+      "personCode": "MLV343",
+      "firstName": "Luce",
+      "lastName": "Morneau",
+      "role": "PARTNER",
+      "email": "",
+      "teamNumber": "6",
+      "organizationName": "Desharnais"
+    },
+    {
+      "personCode": "LJV753",
+      "firstName": "Jacques",
+      "lastName": "Laflamme",
+      "role": "ESCORT",
+      "email": "",
+      "teamNumber": "7",
+      "organizationName": "Desjardins"
+    },
+    {
+      "personCode": "LLD726",
+      "firstName": "Linda",
+      "lastName": "Lafleur",
+      "role": "DRIVER",
+      "email": "",
+      "teamNumber": "7",
+      "organizationName": "Desjardins"
+    }
+  ],
+  "transports": [
+    {
+      "originPostalCode": null,
+      "destinationPostalCode": null,
+      "creationTime": "09:39",
+      "allocationTime": "14:34",
+      "assignmentTime": "14:34",
+      "teamNumber": 1,
+      "teamMileage": 0
+    },
+    {
+      "originPostalCode": null,
+      "destinationPostalCode": null,
+      "creationTime": "09:50",
+      "allocationTime": "",
+      "assignmentTime": "14:54",
+      "teamNumber": 7,
+      "teamMileage": 0
+    }
+  ],
+  "id": 2281,
+  "number": 3,
+  "soiree": "2017-12-01T23:59:59.999Z"
+}
