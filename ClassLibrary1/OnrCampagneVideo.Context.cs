@@ -31,5 +31,8 @@ namespace ONRVideo
         public virtual DbSet<Soiree> Soirees { get; set; }
         public virtual DbSet<Transport> Transports { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
+        public virtual DbSet<VideosEquipe> VideosEquipes { get; set; }
+        public virtual DbSet<VideosOrganisation> VideosOrganisations { get; set; }
+        public virtual DbSet<VideosSoiree> VideosSoirees { get; set; }
     }
 }

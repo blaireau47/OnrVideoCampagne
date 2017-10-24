@@ -46,7 +46,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="teamId" Type="int" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="teamId" Type="int" Nullable="false" />
           <Property Name="originPostalCode" Type="nchar" MaxLength="10" />
           <Property Name="destinationPostalCode" Type="nchar" MaxLength="10" />
           <Property Name="creationTime" Type="datetime" />
@@ -54,6 +54,34 @@
           <Property Name="assignmentTime" Type="datetime" />
           <Property Name="teamMileage" Type="int" />
           <Property Name="teamNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VideosEquipe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="EquipeId" Type="int" Nullable="false" />
+          <Property Name="VideoUrl" Type="varchar" MaxLength="256" />
+          <Property Name="dateAdded" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VideosOrganisation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SoireeId" Type="int" Nullable="false" />
+          <Property Name="Organisation" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="VideoUrl" Type="varchar" MaxLength="256" />
+          <Property Name="dateAdded" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VideosSoiree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SoireeId" Type="int" Nullable="false" />
+          <Property Name="VideoUrl" Type="varchar" MaxLength="256" />
+          <Property Name="dateAdded" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Volunteers">
           <Key>
@@ -95,6 +123,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrganisationsVideo_Soirees">
+          <End Role="Soirees" Type="Self.Soirees" Multiplicity="1" />
+          <End Role="VideosOrganisation" Type="Self.VideosOrganisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Soirees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideosOrganisation">
+              <PropertyRef Name="SoireeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Soirees_ToCampagne">
           <End Role="Campagnes" Type="Self.Campagnes" Multiplicity="1" />
           <End Role="Soirees" Type="Self.Soirees" Multiplicity="*" />
@@ -104,6 +144,30 @@
             </Principal>
             <Dependent Role="Soirees">
               <PropertyRef Name="campagneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_ToEquipes">
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1" />
+          <End Role="VideosEquipe" Type="Self.VideosEquipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideosEquipe">
+              <PropertyRef Name="EquipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_ToSoirees">
+          <End Role="Soirees" Type="Self.Soirees" Multiplicity="1" />
+          <End Role="VideosSoiree" Type="Self.VideosSoiree" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Soirees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideosSoiree">
+              <PropertyRef Name="SoireeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -137,6 +201,9 @@
           <EntitySet Name="Equipes" EntityType="Self.Equipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Soirees" EntityType="Self.Soirees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transports" EntityType="Self.Transports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideosEquipe" EntityType="Self.VideosEquipe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideosOrganisation" EntityType="Self.VideosOrganisation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VideosSoiree" EntityType="Self.VideosSoiree" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteers" EntityType="Self.Volunteers" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Campagnes_ToCentrale" Association="Self.FK_Campagnes_ToCentrale">
             <End Role="Centrales" EntitySet="Centrales" />
@@ -146,9 +213,21 @@
             <End Role="Soirees" EntitySet="Soirees" />
             <End Role="Equipes" EntitySet="Equipes" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrganisationsVideo_Soirees" Association="Self.FK_OrganisationsVideo_Soirees">
+            <End Role="Soirees" EntitySet="Soirees" />
+            <End Role="VideosOrganisation" EntitySet="VideosOrganisation" />
+          </AssociationSet>
           <AssociationSet Name="FK_Soirees_ToCampagne" Association="Self.FK_Soirees_ToCampagne">
             <End Role="Campagnes" EntitySet="Campagnes" />
             <End Role="Soirees" EntitySet="Soirees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_ToEquipes" Association="Self.FK_Table_ToEquipes">
+            <End Role="Equipes" EntitySet="Equipes" />
+            <End Role="VideosEquipe" EntitySet="VideosEquipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_ToSoirees" Association="Self.FK_Table_ToSoirees">
+            <End Role="Soirees" EntitySet="Soirees" />
+            <End Role="VideosSoiree" EntitySet="VideosSoiree" />
           </AssociationSet>
           <AssociationSet Name="FK_Transports_ToEquipes" Association="Self.FK_Transports_ToEquipes">
             <End Role="Equipes" EntitySet="Equipes" />
@@ -195,6 +274,7 @@
           <NavigationProperty Name="Soiree" Relationship="Self.FK_Equipes_ToSoirees" FromRole="Equipes" ToRole="Soirees" />
           <NavigationProperty Name="Transports" Relationship="Self.FK_Transports_ToEquipes" FromRole="Equipes" ToRole="Transports" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteers_ToEquipes" FromRole="Equipes" ToRole="Volunteers" />
+          <NavigationProperty Name="VideosEquipes" Relationship="ONRCampagneVideoModel.FK_Table_ToEquipes" FromRole="Equipe" ToRole="VideosEquipe" />
         </EntityType>
         <EntityType Name="Soiree">
           <Key>
@@ -206,6 +286,8 @@
           <Property Name="soiree1" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Campagne" Relationship="Self.FK_Soirees_ToCampagne" FromRole="Soirees" ToRole="Campagnes" />
           <NavigationProperty Name="Equipes" Relationship="Self.FK_Equipes_ToSoirees" FromRole="Soirees" ToRole="Equipes" />
+          <NavigationProperty Name="VideosOrganisations" Relationship="ONRCampagneVideoModel.FK_OrganisationsVideo_Soirees" FromRole="Soiree" ToRole="VideosOrganisation" />
+          <NavigationProperty Name="VideosSoirees" Relationship="ONRCampagneVideoModel.FK_Table_ToSoirees" FromRole="Soiree" ToRole="VideosSoiree" />
         </EntityType>
         <EntityType Name="Transport">
           <Key>
@@ -326,7 +408,89 @@
             <End Role="Equipes" EntitySet="Equipes" />
             <End Role="Volunteers" EntitySet="Volunteers" />
           </AssociationSet>
+          <EntitySet Name="VideosEquipes" EntityType="ONRCampagneVideoModel.VideosEquipe" />
+          <EntitySet Name="VideosOrganisations" EntityType="ONRCampagneVideoModel.VideosOrganisation" />
+          <EntitySet Name="VideosSoirees" EntityType="ONRCampagneVideoModel.VideosSoiree" />
+          <AssociationSet Name="FK_Table_ToEquipes" Association="ONRCampagneVideoModel.FK_Table_ToEquipes">
+            <End Role="Equipe" EntitySet="Equipes" />
+            <End Role="VideosEquipe" EntitySet="VideosEquipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrganisationsVideo_Soirees" Association="ONRCampagneVideoModel.FK_OrganisationsVideo_Soirees">
+            <End Role="Soiree" EntitySet="Soirees" />
+            <End Role="VideosOrganisation" EntitySet="VideosOrganisations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_ToSoirees" Association="ONRCampagneVideoModel.FK_Table_ToSoirees">
+            <End Role="Soiree" EntitySet="Soirees" />
+            <End Role="VideosSoiree" EntitySet="VideosSoirees" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="VideosEquipe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EquipeId" Type="Int32" Nullable="false" />
+          <Property Name="VideoUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="dateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Equipe" Relationship="ONRCampagneVideoModel.FK_Table_ToEquipes" FromRole="VideosEquipe" ToRole="Equipe" />
+        </EntityType>
+        <EntityType Name="VideosOrganisation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SoireeId" Type="Int32" Nullable="false" />
+          <Property Name="Organisation" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="VideoUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="dateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Soiree" Relationship="ONRCampagneVideoModel.FK_OrganisationsVideo_Soirees" FromRole="VideosOrganisation" ToRole="Soiree" />
+        </EntityType>
+        <EntityType Name="VideosSoiree">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SoireeId" Type="Int32" Nullable="false" />
+          <Property Name="VideoUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="dateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Soiree" Relationship="ONRCampagneVideoModel.FK_Table_ToSoirees" FromRole="VideosSoiree" ToRole="Soiree" />
+        </EntityType>
+        <Association Name="FK_Table_ToEquipes">
+          <End Type="ONRCampagneVideoModel.Equipe" Role="Equipe" Multiplicity="1" />
+          <End Type="ONRCampagneVideoModel.VideosEquipe" Role="VideosEquipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideosEquipe">
+              <PropertyRef Name="EquipeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrganisationsVideo_Soirees">
+          <End Type="ONRCampagneVideoModel.Soiree" Role="Soiree" Multiplicity="1" />
+          <End Type="ONRCampagneVideoModel.VideosOrganisation" Role="VideosOrganisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Soiree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideosOrganisation">
+              <PropertyRef Name="SoireeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_ToSoirees">
+          <End Type="ONRCampagneVideoModel.Soiree" Role="Soiree" Multiplicity="1" />
+          <End Type="ONRCampagneVideoModel.VideosSoiree" Role="VideosSoiree" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Soiree">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VideosSoiree">
+              <PropertyRef Name="SoireeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -400,6 +564,37 @@
                 <ScalarProperty Name="teamID" ColumnName="teamID" />
                 <ScalarProperty Name="organizationName" ColumnName="organizationName" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideosEquipes">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.VideosEquipe">
+              <MappingFragment StoreEntitySet="VideosEquipe">
+                <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+                <ScalarProperty Name="EquipeId" ColumnName="EquipeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideosOrganisations">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.VideosOrganisation">
+              <MappingFragment StoreEntitySet="VideosOrganisation">
+                <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+                <ScalarProperty Name="Organisation" ColumnName="Organisation" />
+                <ScalarProperty Name="SoireeId" ColumnName="SoireeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideosSoirees">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.VideosSoiree">
+              <MappingFragment StoreEntitySet="VideosSoiree">
+                <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
+                <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
+                <ScalarProperty Name="SoireeId" ColumnName="SoireeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

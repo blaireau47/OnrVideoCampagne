@@ -16,6 +16,12 @@
         <AssociationConnector Association="ONRCampagneVideoModel.FK_Equipes_ToSoirees" ManuallyRouted="false" />
         <AssociationConnector Association="ONRCampagneVideoModel.FK_Transports_ToEquipes" ManuallyRouted="false" />
         <AssociationConnector Association="ONRCampagneVideoModel.FK_Volunteers_ToEquipes" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ONRCampagneVideoModel.VideosEquipe" Width="1.5" PointX="9.75" PointY="8.375" />
+        <EntityTypeShape EntityType="ONRCampagneVideoModel.VideosOrganisation" Width="1.5" PointX="7.5" PointY="11" />
+        <EntityTypeShape EntityType="ONRCampagneVideoModel.VideosSoiree" Width="1.5" PointX="7.5" PointY="8.25" />
+        <AssociationConnector Association="ONRCampagneVideoModel.FK_Table_ToEquipes" />
+        <AssociationConnector Association="ONRCampagneVideoModel.FK_OrganisationsVideo_Soirees" />
+        <AssociationConnector Association="ONRCampagneVideoModel.FK_Table_ToSoirees" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

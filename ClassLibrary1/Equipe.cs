@@ -19,6 +19,7 @@ namespace ONRVideo
         {
             this.Transports = new HashSet<Transport>();
             this.Volunteers = new HashSet<Volunteer>();
+            this.VideosEquipes = new HashSet<VideosEquipe>();
         }
     
         public int Id { get; set; }
@@ -34,5 +35,7 @@ namespace ONRVideo
         public virtual ICollection<Transport> Transports { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Volunteer> Volunteers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VideosEquipe> VideosEquipes { get; set; }
     }
 }
