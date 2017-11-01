@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="ControlerJsonToModel.cs" />
     <Compile Include="ControlerLogger.cs" />
+    <Compile Include="ControlerSezionResponseToModel.cs" />
     <Compile Include="Equipe.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>

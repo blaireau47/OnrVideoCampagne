@@ -24,13 +24,21 @@ namespace WH.Sezion.NewVideo
                 return req.CreateResponse(HttpStatusCode.BadRequest, new
                 {
                     error = "Please pass first/last properties in the input object"
+
                 });
             }
 
             return req.CreateResponse(HttpStatusCode.OK, new
             {
+                ///Save video INFO to DB
+                
                 greeting = $"Hello {data.first} {data.last}!"
+
+
             });
         }
+
+
+       
     }
 }
