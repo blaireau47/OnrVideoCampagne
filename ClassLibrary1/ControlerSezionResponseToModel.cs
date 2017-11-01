@@ -66,9 +66,19 @@ namespace ONRVideo
         private bool SaveVideoEquipe(JObject _jsonSezionVidInfo)
         {
             bool retValue = false;
-
+            ONRVideo.ONRCampagneVideoEntities onrEntities = new ONRCampagneVideoEntities();
             ONRVideo.VideosEquipe vidInfoFromSezion = new VideosEquipe();
+
+            ////Retrieve info from Data. Information is not passt ass JSON but as String
+
             //vidInfoFromSezion.Equipe = _jsonSezionVidInfo["data"].ToString();
+            //vidInfoFromSezion.EquipeId = jsonSezionVidInfo["data"].ToString();
+
+            vidInfoFromSezion.dateAdded = DateTime.Now;
+            vidInfoFromSezion.VideoUrl = _jsonSezionVidInfo["outFiles"]["Name"].ToString();
+
+            onrEntities.VideosEquipes.Add(vidInfoFromSezion);
+            onrEntities.SaveChanges();
 
             return retValue;
         }
