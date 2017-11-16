@@ -19,6 +19,7 @@ namespace ONRVideo
         public string Organisation { get; set; }
         public string VideoUrl { get; set; }
         public System.DateTime dateAdded { get; set; }
+        public Nullable<System.DateTime> SentOn { get; set; }
     
         public virtual Soiree Soiree { get; set; }
     }

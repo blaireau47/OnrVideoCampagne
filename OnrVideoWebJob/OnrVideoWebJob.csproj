@@ -60,9 +60,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\ModelOnrVideo.csproj">
+    <ProjectReference Include="..\ClassLibrary1\CtlAndModelOnrVideo.csproj">
       <Project>{761c6c70-41a0-4718-9631-4e7da5858232}</Project>
-      <Name>ModelOnrVideo</Name>
+      <Name>CtlAndModelOnrVideo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -28,7 +28,7 @@ namespace ONRVideo
         public string organizationName { get; set; }
         public Nullable<int> mileage { get; set; }
         public Nullable<int> totalDonations { get; set; }
-        public string completedTransportsCount { get; set; }
+        public Nullable<int> completedTransportsCount { get; set; }
     
         public virtual Soiree Soiree { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -30,7 +30,7 @@
           <Property Name="organizationName" Type="nvarchar" MaxLength="50" />
           <Property Name="mileage" Type="int" />
           <Property Name="totalDonations" Type="int" />
-          <Property Name="completedTransportsCount" Type="nchar" MaxLength="10" />
+          <Property Name="completedTransportsCount" Type="int" />
         </EntityType>
         <EntityType Name="Soirees">
           <Key>
@@ -59,29 +59,32 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EquipeId" Type="int" Nullable="false" />
           <Property Name="VideoUrl" Type="varchar" MaxLength="256" />
           <Property Name="dateAdded" Type="datetime" Nullable="false" />
+          <Property Name="SentOn" Type="datetime" />
         </EntityType>
         <EntityType Name="VideosOrganisation">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SoireeId" Type="int" Nullable="false" />
           <Property Name="Organisation" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="VideoUrl" Type="varchar" MaxLength="256" />
           <Property Name="dateAdded" Type="datetime" Nullable="false" />
+          <Property Name="SentOn" Type="datetime" />
         </EntityType>
         <EntityType Name="VideosSoiree">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SoireeId" Type="int" Nullable="false" />
           <Property Name="VideoUrl" Type="varchar" MaxLength="256" />
           <Property Name="dateAdded" Type="datetime" Nullable="false" />
+          <Property Name="SentOn" Type="datetime" />
         </EntityType>
         <EntityType Name="Volunteers">
           <Key>
@@ -99,20 +102,48 @@
           <Property Name="teamNumber" Type="int" Nullable="false" />
           <Property Name="personCode" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Campagnes_ToCentrale">
-          <End Role="Centrales" Type="Self.Centrales" Multiplicity="1" />
-          <End Role="Campagnes" Type="Self.Campagnes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Centrales">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Campagnes">
-              <PropertyRef Name="CentraleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ONRCampagneVideo.dbo.vEquipesVideoNotSent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEquipesVideoNotSent">
+          <Key>
+            <PropertyRef Name="TeamNumber" />
+            <PropertyRef Name="Soiree" />
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="YoutubeVideoID" Type="varchar" MaxLength="256" />
+          <Property Name="TeamNumber" Type="int" Nullable="false" />
+          <Property Name="Organisation" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soiree" Type="date" Nullable="false" />
+          <Property Name="TeamID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ONRCampagneVideo.dbo.vOrganizationTotaux' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vOrganizationTotaux">
+          <Key>
+            <PropertyRef Name="SoireeID" />
+          </Key>
+          <Property Name="SoireeID" Type="int" Nullable="false" />
+          <Property Name="organisation" Type="nvarchar" MaxLength="50" />
+          <Property Name="kmGROUP" Type="int" />
+          <Property Name="donsGroup" Type="int" />
+          <Property Name="transportsGroup" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vSoireesTotaux">
+          <Key>
+            <PropertyRef Name="SoireeId" />
+          </Key>
+          <Property Name="SoireeId" Type="int" Nullable="false" />
+          <Property Name="kmGROUP" Type="int" />
+          <Property Name="numberOFtEAMS" Type="int" />
+          <Property Name="transportsGroup" Type="int" />
+          <Property Name="donsGroup" Type="int" />
+        </EntityType>
         <Association Name="FK_Equipes_ToSoirees">
-          <End Role="Soirees" Type="Self.Soirees" Multiplicity="1" />
+          <End Role="Soirees" Type="Self.Soirees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Equipes" Type="Self.Equipes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Soirees">
@@ -135,8 +166,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Soirees_ToCampagne">
-          <End Role="Campagnes" Type="Self.Campagnes" Multiplicity="1" />
+        <Association Name="FK_Soirees_ToCamapagne">
+          <End Role="Campagnes" Type="Self.Campagnes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Soirees" Type="Self.Soirees" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Campagnes">
@@ -148,7 +181,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Table_ToEquipes">
-          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1" />
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VideosEquipe" Type="Self.VideosEquipe" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipes">
@@ -171,20 +206,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Transports_ToEquipes">
-          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1" />
-          <End Role="Transports" Type="Self.Transports" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Equipes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Transports">
-              <PropertyRef Name="teamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Volunteers_ToEquipes">
-          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1" />
+          <End Role="Equipes" Type="Self.Equipes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Volunteers" Type="Self.Volunteers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Equipes">
@@ -205,10 +230,33 @@
           <EntitySet Name="VideosOrganisation" EntityType="Self.VideosOrganisation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VideosSoiree" EntityType="Self.VideosSoiree" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteers" EntityType="Self.Volunteers" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Campagnes_ToCentrale" Association="Self.FK_Campagnes_ToCentrale">
-            <End Role="Centrales" EntitySet="Centrales" />
-            <End Role="Campagnes" EntitySet="Campagnes" />
-          </AssociationSet>
+          <EntitySet Name="vEquipesVideoNotSent" EntityType="Self.vEquipesVideoNotSent" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vEquipesVideoNotSent].[YoutubeVideoID] AS [YoutubeVideoID], 
+    [vEquipesVideoNotSent].[TeamNumber] AS [TeamNumber], 
+    [vEquipesVideoNotSent].[Organisation] AS [Organisation], 
+    [vEquipesVideoNotSent].[Soiree] AS [Soiree], 
+    [vEquipesVideoNotSent].[TeamID] AS [TeamID]
+    FROM [dbo].[vEquipesVideoNotSent] AS [vEquipesVideoNotSent]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vOrganizationTotaux" EntityType="Self.vOrganizationTotaux" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vOrganizationTotaux].[SoireeID] AS [SoireeID], 
+    [vOrganizationTotaux].[organisation] AS [organisation], 
+    [vOrganizationTotaux].[kmGROUP] AS [kmGROUP], 
+    [vOrganizationTotaux].[donsGroup] AS [donsGroup], 
+    [vOrganizationTotaux].[transportsGroup] AS [transportsGroup]
+    FROM [dbo].[vOrganizationTotaux] AS [vOrganizationTotaux]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vSoireesTotaux" EntityType="Self.vSoireesTotaux" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vSoireesTotaux].[SoireeId] AS [SoireeId], 
+    [vSoireesTotaux].[kmGROUP] AS [kmGROUP], 
+    [vSoireesTotaux].[numberOFtEAMS] AS [numberOFtEAMS], 
+    [vSoireesTotaux].[transportsGroup] AS [transportsGroup], 
+    [vSoireesTotaux].[donsGroup] AS [donsGroup]
+    FROM [dbo].[vSoireesTotaux] AS [vSoireesTotaux]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Equipes_ToSoirees" Association="Self.FK_Equipes_ToSoirees">
             <End Role="Soirees" EntitySet="Soirees" />
             <End Role="Equipes" EntitySet="Equipes" />
@@ -217,7 +265,7 @@
             <End Role="Soirees" EntitySet="Soirees" />
             <End Role="VideosOrganisation" EntitySet="VideosOrganisation" />
           </AssociationSet>
-          <AssociationSet Name="FK_Soirees_ToCampagne" Association="Self.FK_Soirees_ToCampagne">
+          <AssociationSet Name="FK_Soirees_ToCamapagne" Association="Self.FK_Soirees_ToCamapagne">
             <End Role="Campagnes" EntitySet="Campagnes" />
             <End Role="Soirees" EntitySet="Soirees" />
           </AssociationSet>
@@ -228,10 +276,6 @@
           <AssociationSet Name="FK_Table_ToSoirees" Association="Self.FK_Table_ToSoirees">
             <End Role="Soirees" EntitySet="Soirees" />
             <End Role="VideosSoiree" EntitySet="VideosSoiree" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Transports_ToEquipes" Association="Self.FK_Transports_ToEquipes">
-            <End Role="Equipes" EntitySet="Equipes" />
-            <End Role="Transports" EntitySet="Transports" />
           </AssociationSet>
           <AssociationSet Name="FK_Volunteers_ToEquipes" Association="Self.FK_Volunteers_ToEquipes">
             <End Role="Equipes" EntitySet="Equipes" />
@@ -270,7 +314,7 @@
           <Property Name="organizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="mileage" Type="Int32" />
           <Property Name="totalDonations" Type="Int32" />
-          <Property Name="completedTransportsCount" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="completedTransportsCount" Type="Int32" />
           <NavigationProperty Name="Soiree" Relationship="Self.FK_Equipes_ToSoirees" FromRole="Equipes" ToRole="Soirees" />
           <NavigationProperty Name="Transports" Relationship="Self.FK_Transports_ToEquipes" FromRole="Equipes" ToRole="Transports" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteers_ToEquipes" FromRole="Equipes" ToRole="Volunteers" />
@@ -423,6 +467,9 @@
             <End Role="Soiree" EntitySet="Soirees" />
             <End Role="VideosSoiree" EntitySet="VideosSoirees" />
           </AssociationSet>
+          <EntitySet Name="vOrganizationTotauxes" EntityType="ONRCampagneVideoModel.vOrganizationTotaux" />
+          <EntitySet Name="vSoireesTotauxes" EntityType="ONRCampagneVideoModel.vSoireesTotaux" />
+          <EntitySet Name="vEquipesVideoNotSents" EntityType="ONRCampagneVideoModel.vEquipesVideoNotSent" />
         </EntityContainer>
         <EntityType Name="VideosEquipe">
           <Key>
@@ -433,6 +480,7 @@
           <Property Name="VideoUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="dateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Equipe" Relationship="ONRCampagneVideoModel.FK_Table_ToEquipes" FromRole="VideosEquipe" ToRole="Equipe" />
+          <Property Name="SentOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="VideosOrganisation">
           <Key>
@@ -444,6 +492,7 @@
           <Property Name="VideoUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="dateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Soiree" Relationship="ONRCampagneVideoModel.FK_OrganisationsVideo_Soirees" FromRole="VideosOrganisation" ToRole="Soiree" />
+          <Property Name="SentOn" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="VideosSoiree">
           <Key>
@@ -454,6 +503,7 @@
           <Property Name="VideoUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="dateAdded" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Soiree" Relationship="ONRCampagneVideoModel.FK_Table_ToSoirees" FromRole="VideosSoiree" ToRole="Soiree" />
+          <Property Name="SentOn" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Table_ToEquipes">
           <End Type="ONRCampagneVideoModel.Equipe" Role="Equipe" Multiplicity="1" />
@@ -491,6 +541,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vOrganizationTotaux">
+          <Key>
+            <PropertyRef Name="SoireeID" />
+          </Key>
+          <Property Name="SoireeID" Type="Int32" Nullable="false" />
+          <Property Name="organisation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kmGROUP" Type="Int32" />
+          <Property Name="donsGroup" Type="Int32" />
+          <Property Name="transportsGroup" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vSoireesTotaux">
+          <Key>
+            <PropertyRef Name="SoireeId" />
+          </Key>
+          <Property Name="SoireeId" Type="Int32" Nullable="false" />
+          <Property Name="kmGROUP" Type="Int32" />
+          <Property Name="numberOFtEAMS" Type="Int32" />
+          <Property Name="transportsGroup" Type="Int32" />
+          <Property Name="donsGroup" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vEquipesVideoNotSent">
+          <Key>
+            <PropertyRef Name="TeamNumber" />
+            <PropertyRef Name="Soiree" />
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="YoutubeVideoID" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="TeamNumber" Type="Int32" Nullable="false" />
+          <Property Name="Organisation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soiree" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -570,6 +652,7 @@
           <EntitySetMapping Name="VideosEquipes">
             <EntityTypeMapping TypeName="ONRCampagneVideoModel.VideosEquipe">
               <MappingFragment StoreEntitySet="VideosEquipe">
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
                 <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
                 <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
                 <ScalarProperty Name="EquipeId" ColumnName="EquipeId" />
@@ -580,6 +663,7 @@
           <EntitySetMapping Name="VideosOrganisations">
             <EntityTypeMapping TypeName="ONRCampagneVideoModel.VideosOrganisation">
               <MappingFragment StoreEntitySet="VideosOrganisation">
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
                 <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
                 <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
                 <ScalarProperty Name="Organisation" ColumnName="Organisation" />
@@ -591,6 +675,7 @@
           <EntitySetMapping Name="VideosSoirees">
             <EntityTypeMapping TypeName="ONRCampagneVideoModel.VideosSoiree">
               <MappingFragment StoreEntitySet="VideosSoiree">
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
                 <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
                 <ScalarProperty Name="VideoUrl" ColumnName="VideoUrl" />
                 <ScalarProperty Name="SoireeId" ColumnName="SoireeId" />
@@ -598,7 +683,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="vOrganizationTotauxes">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.vOrganizationTotaux">
+              <MappingFragment StoreEntitySet="vOrganizationTotaux">
+                <ScalarProperty Name="transportsGroup" ColumnName="transportsGroup" />
+                <ScalarProperty Name="donsGroup" ColumnName="donsGroup" />
+                <ScalarProperty Name="kmGROUP" ColumnName="kmGROUP" />
+                <ScalarProperty Name="organisation" ColumnName="organisation" />
+                <ScalarProperty Name="SoireeID" ColumnName="SoireeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vSoireesTotauxes">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.vSoireesTotaux">
+              <MappingFragment StoreEntitySet="vSoireesTotaux">
+                <ScalarProperty Name="donsGroup" ColumnName="donsGroup" />
+                <ScalarProperty Name="transportsGroup" ColumnName="transportsGroup" />
+                <ScalarProperty Name="numberOFtEAMS" ColumnName="numberOFtEAMS" />
+                <ScalarProperty Name="kmGROUP" ColumnName="kmGROUP" />
+                <ScalarProperty Name="SoireeId" ColumnName="SoireeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEquipesVideoNotSents">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.vEquipesVideoNotSent">
+              <MappingFragment StoreEntitySet="vEquipesVideoNotSent">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="Soiree" ColumnName="Soiree" />
+                <ScalarProperty Name="Organisation" ColumnName="Organisation" />
+                <ScalarProperty Name="TeamNumber" ColumnName="TeamNumber" />
+                <ScalarProperty Name="YoutubeVideoID" ColumnName="YoutubeVideoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

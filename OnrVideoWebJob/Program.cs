@@ -12,15 +12,34 @@ namespace OnrVideoWebJob
     {
         static void Main(string[] args)
         {
-            ONRVideo.ControlerJsonToModel ctlOnrVideo = new ONRVideo.ControlerJsonToModel();
-            string soireJSON = GetJSon("http://onrvideo.azurewebsites.net/soirees/soiree2281.txt");  //("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?eveningId=2281");
 
-            ctlOnrVideo.RetrieveModelFromJSon(soireJSON);
-            
+            try
+            {
+                //string soireJSON = GetONRSoireeJSon("http://onrvideo.azurewebsites.net/soirees/soiree2281.txt");  //("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?eveningId=2281");
+
+                ONRVideo.ControlerInfoSoiree infoSoir = new ONRVideo.ControlerInfoSoiree(new DateTime("2017-01-01"));
+
+                infoSoir.GetSoireeInformation(36);
+
+            }
+            catch (Exception ex)
+            {
+                ONRVideo.ControlerLogger.LogError("WebJob GetSjon Error", ex);
+            }
+
+
+
+            //string allText = System.IO.File.ReadAllText(@"C:\projets\onrvideo\sezionReturnEx.json");
+
+            //ONRVideo.ControlerSezionResponseSaveVideo ctlSaveVideoInfo = new ONRVideo.ControlerSezionResponseSaveVideo();
+
+            //ctlSaveVideoInfo.RetrieveSezionInfo(allText);
+
+
         }
 
 
-        static private string GetJSon(string _url)
+        static private string GetONRSoireeJSon(string _url)
         {
             string retValue = string.Empty;
 
@@ -34,7 +53,7 @@ namespace OnrVideoWebJob
             {
                 retValue = sr.ReadToEnd();
             }
-            ONRVideo.ControlerJsonToModel ctlOnrVideoJson = new ONRVideo.ControlerJsonToModel();
+            ONRVideo.ControlerSoireeJsonToModel ctlOnrVideoJson = new ONRVideo.ControlerSoireeJsonToModel();
 
             ctlOnrVideoJson.RetrieveModelFromJSon(retValue);
 

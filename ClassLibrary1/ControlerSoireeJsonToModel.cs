@@ -4,13 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using System.Data.SqlClient;
 
 namespace ONRVideo
 {
-    public class ControlerJsonToModel
+    public class ControlerSoireeJsonToModel
     {
         public void RetrieveModelFromJSon(string _soireeJson)
         {
+
+            try
+            {
+
+           
             ONRVideo.ONRCampagneVideoEntities onrEntities = new ONRCampagneVideoEntities();
 
 
@@ -24,7 +30,7 @@ namespace ONRVideo
 
            
 
-            curSoiree.campagneId = 1;
+            curSoiree.campagneId = 2;
             curSoiree.central = 0;
             curSoiree.soiree1 = Convert.ToDateTime(jsonSoiree["soiree"].ToString());
             curSoiree.Id = Convert.ToInt32(jsonSoiree["id"]);
@@ -88,7 +94,19 @@ namespace ONRVideo
             onrEntities.SaveChanges();
 
 
+            }
 
+            catch (SqlException ex)
+            {
+                ControlerLogger.LogError(_soireeJson, ex);
+            }
+
+
+            catch (Exception ex)
+            {
+
+                ControlerLogger.LogError(_soireeJson, ex);
+            }
 
 
         }

@@ -12,14 +12,12 @@ namespace ONRVideo
     using System;
     using System.Collections.Generic;
     
-    public partial class VideosSoiree
+    public partial class vSoireesTotaux
     {
-        public int Id { get; set; }
         public int SoireeId { get; set; }
-        public string VideoUrl { get; set; }
-        public System.DateTime dateAdded { get; set; }
-        public Nullable<System.DateTime> SentOn { get; set; }
-    
-        public virtual Soiree Soiree { get; set; }
+        public Nullable<int> kmGROUP { get; set; }
+        public Nullable<int> numberOFtEAMS { get; set; }
+        public Nullable<int> transportsGroup { get; set; }
+        public Nullable<int> donsGroup { get; set; }
     }
 }

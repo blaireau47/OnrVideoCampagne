@@ -39,6 +39,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SendGrid, Version=9.8.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.9.9.0\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -58,12 +61,17 @@
     <Compile Include="Centrale.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>
-    <Compile Include="ControlerJsonToModel.cs" />
+    <Compile Include="ControlerSendEmailToEquipes.cs" />
+    <Compile Include="ControlerInfoSoiree.cs" />
+    <Compile Include="ControlerMailer.cs" />
+    <Compile Include="ControlerSendToSezion.cs" />
+    <Compile Include="ControlerSoireeJsonToModel.cs" />
     <Compile Include="ControlerLogger.cs" />
-    <Compile Include="ControlerSezionResponseToModel.cs" />
+    <Compile Include="ControlerSezionResponseSaveVideo.cs" />
     <Compile Include="Equipe.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelTeamEmail.cs" />
     <Compile Include="OnrCampagneVideo.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,6 +94,9 @@
     <Compile Include="Transport.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>
+    <Compile Include="vEquipesVideoNotSent.cs">
+      <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
+    </Compile>
     <Compile Include="VideosEquipe.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>
@@ -96,6 +107,12 @@
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>
     <Compile Include="Volunteer.cs">
+      <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vOrganizationTotaux.cs">
+      <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vSoireesTotaux.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>
   </ItemGroup>
