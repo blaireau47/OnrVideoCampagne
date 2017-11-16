@@ -15,11 +15,11 @@ namespace OnrVideoWebJob
 
             try
             {
-                //string soireJSON = GetONRSoireeJSon("http://onrvideo.azurewebsites.net/soirees/soiree2281.txt");  //("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?eveningId=2281");
+                string soireJSON = GetONRSoireeJSon("http://onrvideo.azurewebsites.net/soirees/soiree2281.txt");  //("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?eveningId=2281");
 
-                ONRVideo.ControlerInfoSoiree infoSoir = new ONRVideo.ControlerInfoSoiree(new DateTime("2017-01-01"));
+                //ONRVideo.ControlerInfoSoiree infoSoir = new ONRVideo.ControlerInfoSoiree(new DateTime("2017-01-01"));
 
-                infoSoir.GetSoireeInformation(36);
+                //infoSoir.GetSoireeInformation(36);
 
             }
             catch (Exception ex)
