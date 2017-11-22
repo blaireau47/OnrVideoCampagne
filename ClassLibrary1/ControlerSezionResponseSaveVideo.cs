@@ -76,6 +76,7 @@ namespace ONRVideo
             switch (videoType)
             {
                 case "Equipe":
+
                     retValue = SaveVideoEquipe(jsonSezionVidInfo);
                     break;
 
@@ -97,6 +98,7 @@ namespace ONRVideo
             try
             {
 
+                ControlerLogger.WriteInformation("Saving video equipe of type Equpe");
             
             bool retValue = false;
             ONRVideo.ONRCampagneVideoEntities onrEntities = new ONRCampagneVideoEntities();
@@ -109,7 +111,8 @@ namespace ONRVideo
             int intEquipeId;
             if (equipeIdInfo[0] == "equipeID" & int.TryParse(equipeIdInfo[1], out intEquipeId))
             {
-                vidInfoFromSezion.EquipeId = intEquipeId;
+                    ControlerLogger.WriteInformation(string.Format("Saving video equipe for team {0}", intEquipeId));
+                    vidInfoFromSezion.EquipeId = intEquipeId;
             }
             else throw new Exception("Erreur lors du retour de Sezion Equipeid INVALID OU INTROUVABLE", new Exception(_jsonSezionVidInfo.ToString()));
             
@@ -126,7 +129,7 @@ namespace ONRVideo
             catch (Exception ex)
             {
 
-                ONRVideo.ControlerLogger.LogError("erreur lors de la sauvegarde du video", ex);
+                ONRVideo.ControlerLogger.LogError("erreur lors de la sauvegarde du video: ", ex);
 
                 return false;
             }

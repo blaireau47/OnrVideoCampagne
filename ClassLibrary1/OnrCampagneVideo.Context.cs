@@ -15,8 +15,23 @@ namespace ONRVideo
     
     public partial class ONRCampagneVideoEntities : DbContext
     {
+    			private static string _connectionString = "name=ONRCampagneVideoEntities";
+    
+            static ONRCampagneVideoEntities()
+            {
+                if (!string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("AzureFunction")))
+                {
+                    var connectionString = System.Environment.GetEnvironmentVariable("EntityFrameworkConnectionString");
+    
+                    if (!string.IsNullOrEmpty(connectionString))
+                    {
+                        _connectionString = connectionString;
+                    }
+                }
+            }
+    
         public ONRCampagneVideoEntities()
-            : base("name=ONRCampagneVideoEntities")
+            : base(_connectionString)
         {
         }
     

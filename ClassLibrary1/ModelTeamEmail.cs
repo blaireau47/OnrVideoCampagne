@@ -45,11 +45,11 @@ namespace ONRVideo
         {
             TeamMembers = _volunteers;
             //Get other details via configuration
-            From = System.Configuration.ConfigurationSettings.AppSettings["FromEmail"];
-            FromName = System.Configuration.ConfigurationSettings.AppSettings["FromName"];
-            Subject = System.Configuration.ConfigurationSettings.AppSettings["SubjectTeamEmail"];
+            From = System.Configuration.ConfigurationSettings.AppSettings["FROM_EQUIPEVIDEO_EMAIL"];
+            FromName = System.Configuration.ConfigurationSettings.AppSettings["FROM_NAME_EQUIPEVIDEO_EMAIL"];
+            Subject = System.Configuration.ConfigurationSettings.AppSettings["SUBJECT_EQUIPEVIDEO_EMAIL"];
             
-            EmailTemplateId = System.Configuration.ConfigurationSettings.AppSettings["EmailEquipeVideoTemplateName"];
+            EmailTemplateId = System.Configuration.ConfigurationSettings.AppSettings["TEMPLATEID_SENDGRID_EQUIPEVIDEO_EMAIL"];
             
             ///Change tokens in body
             this.Soiree = _infoVideo.Soiree;

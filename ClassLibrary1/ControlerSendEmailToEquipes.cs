@@ -21,30 +21,30 @@ namespace ONRVideo
        
 
 
-        public  ControlerSendEmailToEquipes(DateTime _soiree)
+        public  ControlerSendEmailToEquipes()
         {
-
+            ONRVideo.ControlerLogger.WriteInformation("Starting to send video to teams that have not received email");
             onrEntities = new ONRCampagneVideoEntities();
 
-            ONRVideo.Soiree soiree = (from c in onrEntities.Soirees
-                                        where c.soiree1 == _soiree
-                                      select c).First<ONRVideo.Soiree>();
+            //List<ONRVideo.Soiree> laSoiree = (from c in onrEntities.Soirees
+            //                                  where c.soiree1 == _soiree
+            //                                  select c).ToList<ONRVideo.Soiree>();
+            //ONRVideo.ControlerLogger.WriteInformation("Checked if soiree exist");
+            ///Check if Soiree exist
+            //if (laSoiree.Count == 0) { throw new Exception(string.Format("La soiréé {0} n'existe pas. Le ControlerSendEmailToEquipes  n'a aucune informaiton pour cette soirée", _soiree)); }
 
-            if (soiree is null) { throw new Exception(string.Format("La soiréé {0} n'existe pas. Le ControlerInfoSoiree  Impossible de récupérer les informations", _soiree)); }
-
-            teamsVidInfo = GetVideosToSend(soiree);
+            teamsVidInfo = GetAllTeamsToSendVideo();
         }
 
-        private List<vEquipesVideoNotSent> GetVideosToSend(ONRVideo.Soiree _Soiree)
+        private List<vEquipesVideoNotSent> GetAllTeamsToSendVideo()
         {
 
             try
             {
-                List<ONRVideo.vEquipesVideoNotSent> teamsVidInfo;
+                
 
-                teamsVidInfo = (from c in onrEntities.vEquipesVideoNotSents
-                                            where c.Soiree == _Soiree.soiree1
-                                            select c).ToList<ONRVideo.vEquipesVideoNotSent>();
+                teamsVidInfo = (from c in onrEntities.vEquipesVideoNotSents                                           
+                                select c).ToList<ONRVideo.vEquipesVideoNotSent>();
 
             }
             catch (SqlException ex)
@@ -65,6 +65,10 @@ namespace ONRVideo
 
         public void SendVideoToVolunteers()
         {
+            if (this.teamsVidInfo != null)
+            {
+
+           
 
             ControlerMailer ctlMailer = new ControlerMailer();
 
@@ -72,7 +76,7 @@ namespace ONRVideo
             {
 
                 ///Get volunteers for team
-
+                ONRVideo.ControlerLogger.WriteInformation(string.Format("Sending email to team {0}", teamVidInfo.TeamID));
                 List<ONRVideo.Volunteer> teamMembers = (from c in onrEntities.Volunteers
                                                         where c.teamID == teamVidInfo.TeamID
                                           select c).ToList<ONRVideo.Volunteer>();
@@ -81,8 +85,22 @@ namespace ONRVideo
                 ONRVideo.ModelTeamEmail emailInfo = new ModelTeamEmail(teamMembers,teamVidInfo);
 
                 ctlMailer.SendTeamVidEmail(emailInfo);
-            }
 
+                ///todo:Update Video that it was sent. Update SentOn column
+                ///Get videoinfo for teamid
+                VideosEquipe sentVideoInfo = (from c in onrEntities.VideosEquipes
+                                                        where c.EquipeId == teamVidInfo.TeamID
+                                                        select c).First();
+                sentVideoInfo.SentOn = DateTime.Now;
+
+                onrEntities.SaveChanges();
+            }
+            }
+            else
+            {
+
+                ONRVideo.ControlerLogger.WriteInformation("No videos where found to be sent to teams.");
+            }
 
         }
 

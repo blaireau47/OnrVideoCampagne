@@ -52,18 +52,22 @@ namespace ONRVideo
                     Subject = _teamModelEmail.Subject
                 };
                 List<EmailAddress> emailList = new List<EmailAddress>();
+                string toNames = string.Empty; //Holds the names that the amil will be adressed to ex: Dear Eric, Mike and Julie
 
                 foreach (Volunteer volunteer in _teamModelEmail.TeamMembers)
                 {
                     emailList.Add(new EmailAddress(volunteer.email, string.Format("{0} {1}", volunteer.firstName, volunteer.lastName)));
+                    toNames += string.Format("{0}, ", volunteer.firstName);
                 }
                 //msg.AddTos(emailList);
 
                 msg.AddTo(new EmailAddress("blaireau47@gmail.com", ""));
                 msg.SetTemplateId(_teamModelEmail.EmailTemplateId);
 
+
+                msg.AddSubstitution("ToNames", toNames);
                 msg.AddSubstitution("TeamNumber", _teamModelEmail.TeamNumber.ToString());
-                msg.AddSubstitution("Soiree", _teamModelEmail.Soiree.ToLongDateString());
+                msg.AddSubstitution("SoireeDate", _teamModelEmail.Soiree.ToLongDateString());
                 msg.AddSubstitution("YoutubeID", _teamModelEmail.YoutubeVideoID);
 
 

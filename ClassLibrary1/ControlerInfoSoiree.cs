@@ -8,6 +8,9 @@ using System.Data.SqlClient;
 
 namespace ONRVideo
 {
+    /// <summary>
+    /// Ce controleur permet de recupérer les informations utiliser lors dela génération des videos
+    /// </summary>
     public class ControlerInfoSoiree
     {
         private List<ONRVideo.Equipe> equipesInfo;

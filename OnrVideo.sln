@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CtlAndModelOnrVideo", "ClassLibrary1\CtlAndModelOnrVideo.csproj", "{761C6C70-41A0-4718-9631-4E7DA5858232}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnrVideoWebJob", "OnrVideoW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WH.Sezion.NewVideo", "WH.Sezion.NewVideo\WH.Sezion.NewVideo.csproj", "{1830150B-4122-4B84-9BDC-06AA404F6133}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebJob.SendVideoToSezion", "WebJob.SendVideoToSezion\WebJob.SendVideoToSezion.csproj", "{78DDD5FF-7D27-4107-94D2-87AF9313AD6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJob.SendVideoInformationToSezion", "WebJob.SendVideoToSezion\WebJob.SendVideoInformationToSezion.csproj", "{78DDD5FF-7D27-4107-94D2-87AF9313AD6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

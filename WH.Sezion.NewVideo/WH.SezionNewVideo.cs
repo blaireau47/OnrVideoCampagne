@@ -14,13 +14,13 @@ namespace WH.Sezion.NewVideo
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log)
         {
             
-            log.Info($"Webhook was triggered again!");
+            log.Info($"Webhook was triggered yet again!");
 
             string jsonContent = await req.Content.ReadAsStringAsync();
             //dynamic data = JsonConvert.DeserializeObject(jsonContent);
             ONRVideo.ControlerLogger.WriteInformation("sent data = " + jsonContent);
-            
 
+            log.Info($"sent data 2 =  " + jsonContent);
 
 
             //if (data.first == null || data.last == null)
@@ -31,9 +31,14 @@ namespace WH.Sezion.NewVideo
 
             //    });
             //
+
+            log.Info($"before ControlerSezionResponseSaveVideo");
             ONRVideo.ControlerSezionResponseSaveVideo objCtlSaveSezion = new ONRVideo.ControlerSezionResponseSaveVideo();
+            log.Info($"After ControlerSezionResponseSaveVideo");
+            log.Info($"before RetrieveSezionInfo");
             objCtlSaveSezion.RetrieveSezionInfo(jsonContent);
 
+            log.Info($"After RetrieveSezionInfo");
             ///Send a empty response ok to sezion. Sezion only waits for a Status OK
             return req.CreateResponse(HttpStatusCode.OK, new
             {

@@ -55,8 +55,23 @@ using System.Linq;
 
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext
 {
+			private static string _connectionString = "name=<#=container.Name#>";
+
+        static <#=code.Escape(container)#>()
+        {
+            if (!string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("AzureFunction")))
+            {
+                var connectionString = System.Environment.GetEnvironmentVariable("EntityFrameworkConnectionString");
+
+                if (!string.IsNullOrEmpty(connectionString))
+                {
+                    _connectionString = connectionString;
+                }
+            }
+        }
+
     public <#=code.Escape(container)#>()
-        : base("name=<#=container.Name#>")
+        : base(_connectionString)
     {
 <#
 if (!loader.IsLazyLoadingEnabled(container))
