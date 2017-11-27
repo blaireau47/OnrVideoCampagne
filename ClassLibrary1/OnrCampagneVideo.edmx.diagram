@@ -26,6 +26,8 @@
         <EntityTypeShape EntityType="ONRCampagneVideoModel.vOrganizationTotaux" Width="1.5" PointX="3.75" PointY="6.75" />
         <EntityTypeShape EntityType="ONRCampagneVideoModel.vSoireesTotaux" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="ONRCampagneVideoModel.vEquipesVideoNotSent" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ONRCampagneVideoModel.vEquipesOrganizationSoireeTotaux" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ONRCampagneVideoModel.vEquipesSoireeTotaux" Width="1.5" PointX="10.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

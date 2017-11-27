@@ -19,5 +19,6 @@ namespace ONRVideo
         public Nullable<int> kmGROUP { get; set; }
         public Nullable<int> donsGroup { get; set; }
         public Nullable<int> transportsGroup { get; set; }
+        public Nullable<int> GroupTeamCOunt { get; set; }
     }
 }

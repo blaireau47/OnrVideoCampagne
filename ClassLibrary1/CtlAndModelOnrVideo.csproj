@@ -94,6 +94,12 @@
     <Compile Include="Transport.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>
+    <Compile Include="vEquipesOrganizationSoireeTotaux.cs">
+      <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vEquipesSoireeTotaux.cs">
+      <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
+    </Compile>
     <Compile Include="vEquipesVideoNotSent.cs">
       <DependentUpon>OnrCampagneVideo.tt</DependentUpon>
     </Compile>

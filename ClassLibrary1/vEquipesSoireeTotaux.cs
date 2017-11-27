@@ -12,14 +12,18 @@ namespace ONRVideo
     using System;
     using System.Collections.Generic;
     
-    public partial class vSoireesTotaux
+    public partial class vEquipesSoireeTotaux
     {
-        public int SoireeId { get; set; }
-        public Nullable<int> kmSoiree { get; set; }
-        public Nullable<int> teamCountSoiree { get; set; }
+        public int EquipeID { get; set; }
+        public Nullable<int> TeamKM { get; set; }
+        public int TeamNumber { get; set; }
+        public Nullable<int> TeamDons { get; set; }
+        public Nullable<int> TeamRaccompagnements { get; set; }
+        public Nullable<int> KmSoiree { get; set; }
+        public Nullable<int> TeamCountSoiree { get; set; }
         public Nullable<int> BenevolesSoiree { get; set; }
-        public Nullable<int> transportsSoiree { get; set; }
-        public Nullable<int> donsSoiree { get; set; }
+        public Nullable<int> TransportsSoiree { get; set; }
+        public Nullable<int> DonsSoiree { get; set; }
         public System.DateTime SoireeDate { get; set; }
     }
 }

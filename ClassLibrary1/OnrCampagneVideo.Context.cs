@@ -52,5 +52,7 @@ namespace ONRVideo
         public virtual DbSet<vOrganizationTotaux> vOrganizationTotauxes { get; set; }
         public virtual DbSet<vSoireesTotaux> vSoireesTotauxes { get; set; }
         public virtual DbSet<vEquipesVideoNotSent> vEquipesVideoNotSents { get; set; }
+        public virtual DbSet<vEquipesOrganizationSoireeTotaux> vEquipesOrganizationSoireeTotauxes { get; set; }
+        public virtual DbSet<vEquipesSoireeTotaux> vEquipesSoireeTotauxes { get; set; }
     }
 }

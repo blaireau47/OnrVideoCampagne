@@ -103,6 +103,51 @@
           <Property Name="personCode" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'ONRCampagneVideo.dbo.vEquipesOrganizationSoireeTotaux' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEquipesOrganizationSoireeTotaux">
+          <Key>
+            <PropertyRef Name="EquipeID" />
+            <PropertyRef Name="TeamNumber" />
+            <PropertyRef Name="SoireeDate" />
+          </Key>
+          <Property Name="EquipeID" Type="int" Nullable="false" />
+          <Property Name="TeamKM" Type="int" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="TeamNumber" Type="int" Nullable="false" />
+          <Property Name="TeamDons" Type="int" />
+          <Property Name="TeamRaccompagnements" Type="int" />
+          <Property Name="DonsGroup" Type="int" />
+          <Property Name="KmGroup" Type="int" />
+          <Property Name="TransportsGroup" Type="int" />
+          <Property Name="GroupTeamCOunt" Type="int" />
+          <Property Name="KmSoiree" Type="int" />
+          <Property Name="TeamCountSoiree" Type="int" />
+          <Property Name="BenevolesSoiree" Type="int" />
+          <Property Name="TransportsSoiree" Type="int" />
+          <Property Name="DonsSoiree" Type="int" />
+          <Property Name="SoireeDate" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ONRCampagneVideo.dbo.vEquipesSoireeTotaux' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEquipesSoireeTotaux">
+          <Key>
+            <PropertyRef Name="EquipeID" />
+            <PropertyRef Name="TeamNumber" />
+            <PropertyRef Name="SoireeDate" />
+          </Key>
+          <Property Name="EquipeID" Type="int" Nullable="false" />
+          <Property Name="TeamKM" Type="int" />
+          <Property Name="TeamNumber" Type="int" Nullable="false" />
+          <Property Name="TeamDons" Type="int" />
+          <Property Name="TeamRaccompagnements" Type="int" />
+          <Property Name="KmSoiree" Type="int" />
+          <Property Name="TeamCountSoiree" Type="int" />
+          <Property Name="BenevolesSoiree" Type="int" />
+          <Property Name="TransportsSoiree" Type="int" />
+          <Property Name="DonsSoiree" Type="int" />
+          <Property Name="SoireeDate" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'ONRCampagneVideo.dbo.vEquipesVideoNotSent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vEquipesVideoNotSent">
           <Key>
@@ -123,6 +168,7 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vOrganizationTotaux' does not
             <PropertyRef Name="SoireeID" />
           </Key>
           <Property Name="SoireeID" Type="int" Nullable="false" />
+          <Property Name="GroupTeamCOunt" Type="int" />
           <Property Name="organisation" Type="nvarchar" MaxLength="50" />
           <Property Name="kmGROUP" Type="int" />
           <Property Name="donsGroup" Type="int" />
@@ -132,13 +178,16 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vOrganizationTotaux' does not
 warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vSoireesTotaux">
           <Key>
+            <PropertyRef Name="SoireeDate" />
             <PropertyRef Name="SoireeId" />
           </Key>
+          <Property Name="SoireeDate" Type="date" Nullable="false" />
           <Property Name="SoireeId" Type="int" Nullable="false" />
-          <Property Name="kmGROUP" Type="int" />
-          <Property Name="numberOFtEAMS" Type="int" />
-          <Property Name="transportsGroup" Type="int" />
-          <Property Name="donsGroup" Type="int" />
+          <Property Name="kmSoiree" Type="int" />
+          <Property Name="teamCountSoiree" Type="int" />
+          <Property Name="BenevolesSoiree" Type="int" />
+          <Property Name="transportsSoiree" Type="int" />
+          <Property Name="donsSoiree" Type="int" />
         </EntityType>
         <Association Name="FK_Equipes_ToSoirees">
           <End Role="Soirees" Type="Self.Soirees" Multiplicity="1">
@@ -230,6 +279,41 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           <EntitySet Name="VideosOrganisation" EntityType="Self.VideosOrganisation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VideosSoiree" EntityType="Self.VideosSoiree" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteers" EntityType="Self.Volunteers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vEquipesOrganizationSoireeTotaux" EntityType="Self.vEquipesOrganizationSoireeTotaux" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vEquipesOrganizationSoireeTotaux].[EquipeID] AS [EquipeID], 
+    [vEquipesOrganizationSoireeTotaux].[TeamKM] AS [TeamKM], 
+    [vEquipesOrganizationSoireeTotaux].[GroupName] AS [GroupName], 
+    [vEquipesOrganizationSoireeTotaux].[TeamNumber] AS [TeamNumber], 
+    [vEquipesOrganizationSoireeTotaux].[TeamDons] AS [TeamDons], 
+    [vEquipesOrganizationSoireeTotaux].[TeamRaccompagnements] AS [TeamRaccompagnements], 
+    [vEquipesOrganizationSoireeTotaux].[DonsGroup] AS [DonsGroup], 
+    [vEquipesOrganizationSoireeTotaux].[KmGroup] AS [KmGroup], 
+    [vEquipesOrganizationSoireeTotaux].[TransportsGroup] AS [TransportsGroup], 
+    [vEquipesOrganizationSoireeTotaux].[GroupTeamCOunt] AS [GroupTeamCOunt], 
+    [vEquipesOrganizationSoireeTotaux].[KmSoiree] AS [KmSoiree], 
+    [vEquipesOrganizationSoireeTotaux].[TeamCountSoiree] AS [TeamCountSoiree], 
+    [vEquipesOrganizationSoireeTotaux].[BenevolesSoiree] AS [BenevolesSoiree], 
+    [vEquipesOrganizationSoireeTotaux].[TransportsSoiree] AS [TransportsSoiree], 
+    [vEquipesOrganizationSoireeTotaux].[DonsSoiree] AS [DonsSoiree], 
+    [vEquipesOrganizationSoireeTotaux].[SoireeDate] AS [SoireeDate]
+    FROM [dbo].[vEquipesOrganizationSoireeTotaux] AS [vEquipesOrganizationSoireeTotaux]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vEquipesSoireeTotaux" EntityType="Self.vEquipesSoireeTotaux" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vEquipesSoireeTotaux].[EquipeID] AS [EquipeID], 
+    [vEquipesSoireeTotaux].[TeamKM] AS [TeamKM], 
+    [vEquipesSoireeTotaux].[TeamNumber] AS [TeamNumber], 
+    [vEquipesSoireeTotaux].[TeamDons] AS [TeamDons], 
+    [vEquipesSoireeTotaux].[TeamRaccompagnements] AS [TeamRaccompagnements], 
+    [vEquipesSoireeTotaux].[KmSoiree] AS [KmSoiree], 
+    [vEquipesSoireeTotaux].[TeamCountSoiree] AS [TeamCountSoiree], 
+    [vEquipesSoireeTotaux].[BenevolesSoiree] AS [BenevolesSoiree], 
+    [vEquipesSoireeTotaux].[TransportsSoiree] AS [TransportsSoiree], 
+    [vEquipesSoireeTotaux].[DonsSoiree] AS [DonsSoiree], 
+    [vEquipesSoireeTotaux].[SoireeDate] AS [SoireeDate]
+    FROM [dbo].[vEquipesSoireeTotaux] AS [vEquipesSoireeTotaux]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vEquipesVideoNotSent" EntityType="Self.vEquipesVideoNotSent" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vEquipesVideoNotSent].[YoutubeVideoID] AS [YoutubeVideoID], 
@@ -242,6 +326,7 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           <EntitySet Name="vOrganizationTotaux" EntityType="Self.vOrganizationTotaux" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vOrganizationTotaux].[SoireeID] AS [SoireeID], 
+    [vOrganizationTotaux].[GroupTeamCOunt] AS [GroupTeamCOunt], 
     [vOrganizationTotaux].[organisation] AS [organisation], 
     [vOrganizationTotaux].[kmGROUP] AS [kmGROUP], 
     [vOrganizationTotaux].[donsGroup] AS [donsGroup], 
@@ -250,11 +335,13 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           </EntitySet>
           <EntitySet Name="vSoireesTotaux" EntityType="Self.vSoireesTotaux" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [vSoireesTotaux].[SoireeDate] AS [SoireeDate], 
     [vSoireesTotaux].[SoireeId] AS [SoireeId], 
-    [vSoireesTotaux].[kmGROUP] AS [kmGROUP], 
-    [vSoireesTotaux].[numberOFtEAMS] AS [numberOFtEAMS], 
-    [vSoireesTotaux].[transportsGroup] AS [transportsGroup], 
-    [vSoireesTotaux].[donsGroup] AS [donsGroup]
+    [vSoireesTotaux].[kmSoiree] AS [kmSoiree], 
+    [vSoireesTotaux].[teamCountSoiree] AS [teamCountSoiree], 
+    [vSoireesTotaux].[BenevolesSoiree] AS [BenevolesSoiree], 
+    [vSoireesTotaux].[transportsSoiree] AS [transportsSoiree], 
+    [vSoireesTotaux].[donsSoiree] AS [donsSoiree]
     FROM [dbo].[vSoireesTotaux] AS [vSoireesTotaux]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Equipes_ToSoirees" Association="Self.FK_Equipes_ToSoirees">
@@ -470,6 +557,8 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           <EntitySet Name="vOrganizationTotauxes" EntityType="ONRCampagneVideoModel.vOrganizationTotaux" />
           <EntitySet Name="vSoireesTotauxes" EntityType="ONRCampagneVideoModel.vSoireesTotaux" />
           <EntitySet Name="vEquipesVideoNotSents" EntityType="ONRCampagneVideoModel.vEquipesVideoNotSent" />
+          <EntitySet Name="vEquipesOrganizationSoireeTotauxes" EntityType="ONRCampagneVideoModel.vEquipesOrganizationSoireeTotaux" />
+          <EntitySet Name="vEquipesSoireeTotauxes" EntityType="ONRCampagneVideoModel.vEquipesSoireeTotaux" />
         </EntityContainer>
         <EntityType Name="VideosEquipe">
           <Key>
@@ -550,16 +639,20 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           <Property Name="kmGROUP" Type="Int32" />
           <Property Name="donsGroup" Type="Int32" />
           <Property Name="transportsGroup" Type="Int32" />
+          <Property Name="GroupTeamCOunt" Type="Int32" />
         </EntityType>
         <EntityType Name="vSoireesTotaux">
           <Key>
             <PropertyRef Name="SoireeId" />
+            <PropertyRef Name="SoireeDate" />
           </Key>
           <Property Name="SoireeId" Type="Int32" Nullable="false" />
-          <Property Name="kmGROUP" Type="Int32" />
-          <Property Name="numberOFtEAMS" Type="Int32" />
-          <Property Name="transportsGroup" Type="Int32" />
-          <Property Name="donsGroup" Type="Int32" />
+          <Property Name="kmSoiree" Type="Int32" />
+          <Property Name="teamCountSoiree" Type="Int32" />
+          <Property Name="BenevolesSoiree" Type="Int32" />
+          <Property Name="transportsSoiree" Type="Int32" />
+          <Property Name="donsSoiree" Type="Int32" />
+          <Property Name="SoireeDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="vEquipesVideoNotSent">
           <Key>
@@ -572,6 +665,47 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           <Property Name="Organisation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Soiree" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="TeamID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vEquipesOrganizationSoireeTotaux">
+          <Key>
+            <PropertyRef Name="EquipeID" />
+            <PropertyRef Name="TeamNumber" />
+            <PropertyRef Name="SoireeDate" />
+          </Key>
+          <Property Name="EquipeID" Type="Int32" Nullable="false" />
+          <Property Name="TeamKM" Type="Int32" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TeamNumber" Type="Int32" Nullable="false" />
+          <Property Name="TeamDons" Type="Int32" />
+          <Property Name="TeamRaccompagnements" Type="Int32" />
+          <Property Name="DonsGroup" Type="Int32" />
+          <Property Name="KmGroup" Type="Int32" />
+          <Property Name="TransportsGroup" Type="Int32" />
+          <Property Name="GroupTeamCOunt" Type="Int32" />
+          <Property Name="KmSoiree" Type="Int32" />
+          <Property Name="TeamCountSoiree" Type="Int32" />
+          <Property Name="BenevolesSoiree" Type="Int32" />
+          <Property Name="TransportsSoiree" Type="Int32" />
+          <Property Name="DonsSoiree" Type="Int32" />
+          <Property Name="SoireeDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="vEquipesSoireeTotaux">
+          <Key>
+            <PropertyRef Name="EquipeID" />
+            <PropertyRef Name="TeamNumber" />
+            <PropertyRef Name="SoireeDate" />
+          </Key>
+          <Property Name="EquipeID" Type="Int32" Nullable="false" />
+          <Property Name="TeamKM" Type="Int32" />
+          <Property Name="TeamNumber" Type="Int32" Nullable="false" />
+          <Property Name="TeamDons" Type="Int32" />
+          <Property Name="TeamRaccompagnements" Type="Int32" />
+          <Property Name="KmSoiree" Type="Int32" />
+          <Property Name="TeamCountSoiree" Type="Int32" />
+          <Property Name="BenevolesSoiree" Type="Int32" />
+          <Property Name="TransportsSoiree" Type="Int32" />
+          <Property Name="DonsSoiree" Type="Int32" />
+          <Property Name="SoireeDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -686,6 +820,7 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           <EntitySetMapping Name="vOrganizationTotauxes">
             <EntityTypeMapping TypeName="ONRCampagneVideoModel.vOrganizationTotaux">
               <MappingFragment StoreEntitySet="vOrganizationTotaux">
+                <ScalarProperty Name="GroupTeamCOunt" ColumnName="GroupTeamCOunt" />
                 <ScalarProperty Name="transportsGroup" ColumnName="transportsGroup" />
                 <ScalarProperty Name="donsGroup" ColumnName="donsGroup" />
                 <ScalarProperty Name="kmGROUP" ColumnName="kmGROUP" />
@@ -697,10 +832,12 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
           <EntitySetMapping Name="vSoireesTotauxes">
             <EntityTypeMapping TypeName="ONRCampagneVideoModel.vSoireesTotaux">
               <MappingFragment StoreEntitySet="vSoireesTotaux">
-                <ScalarProperty Name="donsGroup" ColumnName="donsGroup" />
-                <ScalarProperty Name="transportsGroup" ColumnName="transportsGroup" />
-                <ScalarProperty Name="numberOFtEAMS" ColumnName="numberOFtEAMS" />
-                <ScalarProperty Name="kmGROUP" ColumnName="kmGROUP" />
+                <ScalarProperty Name="SoireeDate" ColumnName="SoireeDate" />
+                <ScalarProperty Name="donsSoiree" ColumnName="donsSoiree" />
+                <ScalarProperty Name="transportsSoiree" ColumnName="transportsSoiree" />
+                <ScalarProperty Name="BenevolesSoiree" ColumnName="BenevolesSoiree" />
+                <ScalarProperty Name="teamCountSoiree" ColumnName="teamCountSoiree" />
+                <ScalarProperty Name="kmSoiree" ColumnName="kmSoiree" />
                 <ScalarProperty Name="SoireeId" ColumnName="SoireeId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -713,6 +850,45 @@ warning 6002: The table/view 'ONRCampagneVideo.dbo.vSoireesTotaux' does not have
                 <ScalarProperty Name="Organisation" ColumnName="Organisation" />
                 <ScalarProperty Name="TeamNumber" ColumnName="TeamNumber" />
                 <ScalarProperty Name="YoutubeVideoID" ColumnName="YoutubeVideoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEquipesOrganizationSoireeTotauxes">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.vEquipesOrganizationSoireeTotaux">
+              <MappingFragment StoreEntitySet="vEquipesOrganizationSoireeTotaux">
+                <ScalarProperty Name="SoireeDate" ColumnName="SoireeDate" />
+                <ScalarProperty Name="DonsSoiree" ColumnName="DonsSoiree" />
+                <ScalarProperty Name="TransportsSoiree" ColumnName="TransportsSoiree" />
+                <ScalarProperty Name="BenevolesSoiree" ColumnName="BenevolesSoiree" />
+                <ScalarProperty Name="TeamCountSoiree" ColumnName="TeamCountSoiree" />
+                <ScalarProperty Name="KmSoiree" ColumnName="KmSoiree" />
+                <ScalarProperty Name="GroupTeamCOunt" ColumnName="GroupTeamCOunt" />
+                <ScalarProperty Name="TransportsGroup" ColumnName="TransportsGroup" />
+                <ScalarProperty Name="KmGroup" ColumnName="KmGroup" />
+                <ScalarProperty Name="DonsGroup" ColumnName="DonsGroup" />
+                <ScalarProperty Name="TeamRaccompagnements" ColumnName="TeamRaccompagnements" />
+                <ScalarProperty Name="TeamDons" ColumnName="TeamDons" />
+                <ScalarProperty Name="TeamNumber" ColumnName="TeamNumber" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="TeamKM" ColumnName="TeamKM" />
+                <ScalarProperty Name="EquipeID" ColumnName="EquipeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEquipesSoireeTotauxes">
+            <EntityTypeMapping TypeName="ONRCampagneVideoModel.vEquipesSoireeTotaux">
+              <MappingFragment StoreEntitySet="vEquipesSoireeTotaux">
+                <ScalarProperty Name="SoireeDate" ColumnName="SoireeDate" />
+                <ScalarProperty Name="DonsSoiree" ColumnName="DonsSoiree" />
+                <ScalarProperty Name="TransportsSoiree" ColumnName="TransportsSoiree" />
+                <ScalarProperty Name="BenevolesSoiree" ColumnName="BenevolesSoiree" />
+                <ScalarProperty Name="TeamCountSoiree" ColumnName="TeamCountSoiree" />
+                <ScalarProperty Name="KmSoiree" ColumnName="KmSoiree" />
+                <ScalarProperty Name="TeamRaccompagnements" ColumnName="TeamRaccompagnements" />
+                <ScalarProperty Name="TeamDons" ColumnName="TeamDons" />
+                <ScalarProperty Name="TeamNumber" ColumnName="TeamNumber" />
+                <ScalarProperty Name="TeamKM" ColumnName="TeamKM" />
+                <ScalarProperty Name="EquipeID" ColumnName="EquipeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -49,7 +49,16 @@ namespace ONRVideo
             FromName = System.Configuration.ConfigurationSettings.AppSettings["FROM_NAME_EQUIPEVIDEO_EMAIL"];
             Subject = System.Configuration.ConfigurationSettings.AppSettings["SUBJECT_EQUIPEVIDEO_EMAIL"];
             
-            EmailTemplateId = System.Configuration.ConfigurationSettings.AppSettings["TEMPLATEID_SENDGRID_EQUIPEVIDEO_EMAIL"];
+            if(_infoVideo.Organisation == "")
+            {
+                EmailTemplateId = System.Configuration.ConfigurationSettings.AppSettings["TEMPLATEID_SENDGRID_GROUPEEQUIPEVIDEO_EMAIL"];
+            }
+            else
+            {
+                EmailTemplateId = System.Configuration.ConfigurationSettings.AppSettings["TEMPLATEID_SENDGRID_EQUIPEVIDEO_EMAIL"];
+            }
+
+            
             
             ///Change tokens in body
             this.Soiree = _infoVideo.Soiree;
