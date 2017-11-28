@@ -59,9 +59,9 @@ namespace ONRVideo
                     emailList.Add(new EmailAddress(volunteer.email, string.Format("{0} {1}", volunteer.firstName, volunteer.lastName)));
                     toNames += string.Format("{0}, ", volunteer.firstName);
                 }
-                //msg.AddTos(emailList);
+                msg.AddTos(emailList);
 
-                msg.AddTo(new EmailAddress("blaireau47@gmail.com", ""));
+                //msg.AddTo(new EmailAddress("blaireau47@gmail.com", ""));
                 msg.SetTemplateId(_teamModelEmail.EmailTemplateId);
 
 

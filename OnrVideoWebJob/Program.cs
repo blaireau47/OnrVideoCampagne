@@ -39,10 +39,13 @@ namespace OnrVideoWebJob
                         ///Check if Soiree exist
                         if (laSoiree.Count == 0)
                         {
-                            ONRVideo.ControlerLogger.WriteInformation(String.Format("Soiree doies not exist , retrieving current soiree {0} and saving to DB", soiree));
-                        //string soireJSON = SaveONRSoireeFromJSon("http://onrvideo.azurewebsites.net/soirees/soiree2281.txt");  //("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?eveningId=2281");
+                            
+
+                        string fichier = string.Format("http://onrvideo.azurewebsites.net/soirees/soiree{0}{1}{2}.txt",DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day);
+                        ONRVideo.ControlerLogger.WriteInformation(String.Format("Soiree doies not exist , retrieving current soiree {0} and saving to DB looking for file {1}", soiree, fichier));
+                        string soireJSON = SaveONRSoireeFromJSon("http://onrvideo.azurewebsites.net/soirees/soiree2281.txt");  //("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?eveningId=2281");
                         //string soireJSON = SaveONRSoireeFromJSon("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?date=2017-08-16&centralLabel=1111");
-                        string soireJSON = SaveONRSoireeFromJSon("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?date=2017-08-16&centralLabel=1296");
+                        //string soireJSON = SaveONRSoireeFromJSon("https://eblais_test:1234qwer@onr-pilote.com/app/api/eveningStatistics?date=2017-08-16&centralLabel=1296");
                     }
 
                     }

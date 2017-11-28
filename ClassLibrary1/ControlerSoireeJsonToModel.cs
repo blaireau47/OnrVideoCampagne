@@ -67,12 +67,21 @@ namespace ONRVideo
 
             foreach (JToken benevole in benevolesJSONResults)
             {
-                ONRVideo.Volunteer curVolunteer = benevole.ToObject<ONRVideo.Volunteer>();
+                    try
+                    {
+                        ONRVideo.Volunteer curVolunteer = benevole.ToObject<ONRVideo.Volunteer>();
 
-                var teamID = onrEntities.Equipes.Single(x => x.SoireeId == soireeID && x.teamNumber == curVolunteer.teamNumber).Id;
-                curVolunteer.teamID = teamID;
-                onrEntities.Volunteers.Add(curVolunteer);
-                benevoles.Add(curVolunteer);
+                        var teamID = onrEntities.Equipes.Single(x => x.SoireeId == soireeID && x.teamNumber == curVolunteer.teamNumber).Id;
+                        curVolunteer.teamID = teamID;
+                        onrEntities.Volunteers.Add(curVolunteer);
+                        benevoles.Add(curVolunteer);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        ControlerLogger.LogError(benevole.ToString(), ex);
+                    }
+
 
             }
             onrEntities.SaveChanges();
